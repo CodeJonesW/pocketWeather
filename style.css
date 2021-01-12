@@ -3,6 +3,12 @@
 }
 
 #todayWeather {
-    background-color: aqua;
+    /* background-color: aqua; */
     
+}
+
+#placeHolderImg {
+    height: 250px;
+    width: 100%;
+    margin-top: 5%;
 }

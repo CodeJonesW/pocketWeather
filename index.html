@@ -9,24 +9,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" deferf></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
+        <nav class="navbar">  
+              <span class="navbar-brand mb-0 h1">pocketWeather</span>
+          </nav>
+
         <div class="row">
+
           <div class="col-sm">
               <form id="searchCityForm" class="container-fluid">
                 <div class="input-group">
                   <span class="input-group-text" id="searchEmoji">⛅</span>
-                  <input  type="text" class="form-control" placeholder="Search City" aria-label="Username" aria-describedby="basic-addon1">
+                  <input  type="text" class="form-control shadow" placeholder="Search City" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
               </form>
           </div>
+
           <div id="todayWeather" class="col-sm">
-            
-                <p>Today Weather Icon</p>
-        
+                <img id="placeHolderImg" src="../../Desktop/Screen Shot 2021-01-11 at 11.58.35 PM.png"></img>
           </div>
+
+
           <div id="fiveDayForecast" class="col-sm">
             <p>Five Day Forecast</p>
           </div>
+
+
         </div>
       </div>
 </body>
