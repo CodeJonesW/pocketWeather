@@ -21,6 +21,7 @@ $( document ).ready(() => {
             default:
                 console.log("click")
           }
+          $("#searchCityInput").val("")
     })
 
 
