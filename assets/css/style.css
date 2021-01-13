@@ -2,9 +2,28 @@
     margin: 2%;
 }
 
-#todayWeather {
-    /* background-color: aqua; */
-    
+#todaysWeather {
+    font-size: 1.5em;   
+}
+
+
+#currentCity {
+    font-size: 1.5em;  
+}
+
+#temperature {
+    /* vertical-align: middle; */
+    text-align: center;
+    font-size: 4.5em; 
+}
+
+#currentWeatherText {
+    text-align: center;
+    margin-top: 5%
+}
+
+#currentWeatherIconTemp {
+    text-align: center;
 }
 
 #placeHolderImg {
@@ -13,10 +32,6 @@
     margin-top: 5%;
 }
 
-#headDiv {
-    /* background-color: bisque; */
-}
-
-#fiveDayForecast {
-
+#currentWeatherIcon {
+    font-size: 5em;
 }

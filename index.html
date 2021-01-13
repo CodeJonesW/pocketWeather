@@ -17,7 +17,7 @@
 <body>
     <div id="headDiv" class="container-fluid">
         <nav class="navbar">  
-              <span class="navbar-brand mb-0 h1">pocketWeather</span>
+              <span class="navbar-brand mb-0 h1">pocketWeather<span id="brain"> 🧠 </span><span id="umbrella">☂️</span></span>
           </nav>
 
         <div class="row">
@@ -32,20 +32,25 @@
               </form>
           </div>
 
-          <div id="todayWeather" class="col-sm">
+          <div class="col-sm">
             <div class="row">
-              <div class="col-sm">
-                  <ul>
-                    <li>Brevard NC</li>
-                    <li>Tuesday - Sunny</li>
-                  </ul>
+              <div id="currentWeatherText" class="col-sm">
+                  
+                    <div id="currentCity" ></div>
+                    <div id="todaysWeather" ></div>
+                    
+                  
               </div>
             </div>
-            <div class="row">
-              <div class="col">🌞</div>
-              <div class="col">🌞</div>
+            <div id="currentWeatherIconTemp" class="row">
+              <div class="col">
+                <span id="currentWeatherIcon">🌞</span>
+              </div>
+              <div class="col">
+                <p id="temperature"></p>
+              </div>
             </div>
-                <img id="placeHolderImg" src="../../Desktop/Screen Shot 2021-01-11 at 11.58.35 PM.png"></img>
+                <!-- <img id="placeHolderImg" src="../../Desktop/Screen Shot 2021-01-11 at 11.58.35 PM.png"></img> -->
           </div>
 
 
