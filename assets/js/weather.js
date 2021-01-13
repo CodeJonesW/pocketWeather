@@ -29,10 +29,10 @@ $( document ).ready(() => {
 
     const searchCity = (city) => {
         console.log(city)
-        // fetch('https://api.openweathermap.org/data/2.5/weather?q=atlanta&appid=APIKEY')
-        // .then(res => res.json())
-        // .then(data => {
-        //     console.log(data)
-        // })
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=atlanta&appid=9d900c46a82ac29300d02baa0107cbe8')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
     }
 })
