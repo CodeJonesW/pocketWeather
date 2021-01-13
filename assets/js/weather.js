@@ -40,7 +40,7 @@ $( document ).ready(() => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=9d900c46a82ac29300d02baa0107cbe8`)
         .then(res => res.json())
         .then(data => {
-            // console.log(data)
+            console.log(data)
             $("#currentCity").text(`${today} in ${data.name} -`)
             $("#todaysWeather").text(data.weather[0].description)
             $("#temperature").text(`${data.main.temp} °`)
@@ -55,37 +55,34 @@ $( document ).ready(() => {
 
     const threeDay = (searchValue) => {
         console.log(searchValue)
-        $.ajax({
-          type: "GET",
-          url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=9d900c46a82ac29300d02baa0107cbe8&units=imperial",
-          dataType: "json",
-          success: function(data) {
-            $("#threeDayForecast").html("<h4 class=\"mt-3\">Predictions:</h4>").append("<div class=\"row\">");
+        fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=9d900c46a82ac29300d02baa0107cbe8&units=imperial")
+            .then(res => res.json())
+            .then(data =>  {
+                console.log(data)
+                $("#threeDayForecast").html("<h4 class=\"mt-3\">Predictions:</h4>").append("<div class=\"row\">");
 
-    
-            for (var i = 0; i < data.list.length - 16; i++) {
+                for (var i = 0; i < data.list.length - 16; i++) {
 
-              if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-   
-                var col = $("<div>").addClass("col-4");
-                var card = $("<div>").addClass("card shadow");
-                var body = $("<div>").addClass("card-body");
+                if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
     
-                var day = $("<h5>").addClass("card-title").text(processDay(new Date(data.list[i].dt_txt), true));
-    
-                var emoji = $("<span>").text("🌞").addClass("threeDayEmoji")
-    
-                var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
-                var p2 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
-    
-                // merge together and put on page
-                col.append(card.append(body.append(day, emoji, p1, p2)));
-                $("#threeDayForecast .row").append(col);
-              }
-            }
-          }
-        });
-      }
+                    var col = $("<div>").addClass("col-4");
+                    var card = $("<div>").addClass("card shadow");
+                    var body = $("<div>").addClass("card-body");
+        
+                    var day = $("<h5>").addClass("card-title").text(processDay(new Date(data.list[i].dt_txt), true));
+        
+                    var emoji = $("<span>").text("⛅").addClass("threeDayEmoji")
+        
+                    var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
+                    var p2 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
+        
+                    // merge together and put on page
+                    col.append(card.append(body.append(day, emoji, p1, p2)));
+                    $("#threeDayForecast .row").append(col);
+                }
+                }
+            })
+        }
 
 
 
