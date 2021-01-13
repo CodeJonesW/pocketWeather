@@ -12,9 +12,9 @@
 }
 
 #temperature {
-    /* vertical-align: middle; */
-    text-align: center;
-    font-size: 4.5em; 
+    text-align: left;
+    font-size: 4.0em; 
+    font-weight: 300;
 }
 
 #currentWeatherText {
@@ -34,4 +34,12 @@
 
 #currentWeatherIcon {
     font-size: 5em;
+}
+
+#tempUnit {
+    margin-top: 3%;
+}
+
+#brain {
+
 }

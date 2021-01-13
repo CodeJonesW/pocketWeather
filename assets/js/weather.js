@@ -38,14 +38,14 @@ $( document ).ready(() => {
         console.log(city)
         // console.log(today)
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=atlanta&units=imperial&appid=9d900c46a82ac29300d02baa0107cbe8`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=9d900c46a82ac29300d02baa0107cbe8`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
             $("#currentCity").text(`${today} in ${data.name} -`)
             $("#todaysWeather").text(data.weather[0].description)
-            $("#temperature").text(data.main.temp)
-
+            $("#temperature").text(`${data.main.temp} °`)
+            $("#currentWeatherIcon").text("🌞")
 
         })
     }
@@ -79,4 +79,27 @@ $( document ).ready(() => {
             break; 
         }
     }
+
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      
+      const success = (pos) => {
+        var crd = pos.coords;
+      
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+      }
+      
+      const error = (err) =>  {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+    //   use to call geolocation cordinates when ready.
+    //   navigator.geolocation.getCurrentPosition(success, error, options);
+
 
