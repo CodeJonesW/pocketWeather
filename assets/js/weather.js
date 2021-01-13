@@ -2,41 +2,37 @@
 
 // window.addEventListener("load", )
 
-$( document ).ready(() => {
-    let date = new Date ()
-    let today = processDay(date)
-    $("#todaysWeather").text(`${today} - `)
-    let previous = localStorage.getItem("previousSearch")
-    if(previous){
-        searchCity(previous, today)
-        threeDay(previous)
-    }
- 
+    $( document ).ready(() => {
+        let date = new Date ()
+        let today = processDay(date)
+        $("#todaysWeather").text(`${today} - `)
+        let previous = localStorage.getItem("previousSearch")
 
-    $("#headDiv").click( (e) => {
-        e.preventDefault()
-        console.log(e.target.id)
+            if(previous){
+                searchCity(previous, today)
+                threeDay(previous)
+            }
 
-        switch(e.target.id) {
-            case "searchCityEmoji":
-                searchCity($( "#searchCityInput").val(), today)
-                break;
-            case "newEvent":
-                // run function!
-                break;
-            default:
-                console.log("click")
-          }
-          $("#searchCityInput").val("")
+
+            $("#headDiv").click( (e) => {
+                e.preventDefault()
+                console.log(e.target.id)
+
+                switch(e.target.id) {
+                    case "searchCityEmoji":
+                        searchCity($( "#searchCityInput").val(), today)
+                        break;
+                    case "newEvent":
+                        // run function!
+                        break;
+                    default:
+                        console.log("click")
+                }
+                $("#searchCityInput").val("")
+            })
     })
 
-
-})
-
     const searchCity = (city, today) => {
-        // console.log(city)
-        // console.log(today)
-
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=9d900c46a82ac29300d02baa0107cbe8`)
         .then(res => res.json())
         .then(data => {
@@ -54,7 +50,6 @@ $( document ).ready(() => {
 
 
     const threeDay = (searchValue) => {
-        console.log(searchValue)
         fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=9d900c46a82ac29300d02baa0107cbe8&units=imperial")
             .then(res => res.json())
             .then(data =>  {
@@ -70,7 +65,7 @@ $( document ).ready(() => {
                     var body = $("<div>").addClass("card-body");
         
                     var day = $("<h5>").addClass("card-title").text(processDay(new Date(data.list[i].dt_txt), true));
-        
+                    
                     var emoji = $("<span>").text("⛅").addClass("threeDayEmoji")
         
                     var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
@@ -80,10 +75,10 @@ $( document ).ready(() => {
                     col.append(card.append(body.append(day, emoji, p1, p2)));
                     $("#threeDayForecast .row").append(col);
                 }
-                }
-            })
-        }
-
+            }
+        })
+    }
+    
 
 
     const processDay = (date, shorten) => {
@@ -135,10 +130,6 @@ $( document ).ready(() => {
                 break; 
             }
         }
- 
-       
-        
-
     }
 
 
