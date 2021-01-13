@@ -3,10 +3,13 @@
 // window.addEventListener("load", )
 
 $( document ).ready(() => {
-    console.log("Yay pocket weather!")
-
-
     let today = processDay()
+
+    if(localStorage.getItem("previousSearch")){
+        searchCity(localStorage.getItem("previousSearch"), today)
+    }
+
+    
 
 
     $("#todaysWeather").text(`${today} - `)
@@ -46,7 +49,7 @@ $( document ).ready(() => {
             $("#todaysWeather").text(data.weather[0].description)
             $("#temperature").text(`${data.main.temp} °`)
             $("#currentWeatherIcon").text("🌞")
-
+            localStorage.setItem("previousSearch", data.name)
         })
     }
 
