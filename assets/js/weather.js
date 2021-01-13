@@ -54,7 +54,7 @@
             .then(res => res.json())
             .then(data =>  {
                 console.log(data)
-                $("#threeDayForecast").html("<h4 class=\"mt-3\">Predictions:</h4>").append("<div class=\"row\">");
+                $("#threeDayForecast").append("<div class=\"row\">");
 
                 for (var i = 0; i < data.list.length - 16; i++) {
 
