@@ -4,14 +4,9 @@
         $("#todaysWeather").text(`${today} - `)
         let previous = localStorage.getItem("previousSearch")
 
-
-
-
-
             if(previous){
                 searchWeather(previous, today)
             }
-
 
             $("#headDiv").click( (e) => {
                 e.preventDefault()
@@ -67,7 +62,7 @@
                     listOfNextThreeDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt)))
                     listOfNexstThreeTemps.push(fiveDayForecastData.list[i].main.temp_max)
                     var col = $("<div>").addClass("col-4");
-                    var card = $("<div>").addClass("card shadow");
+                    var card = $("<div>").addClass("card shadow threeDayForecastCard");
                     var body = $("<div>").addClass("card-body");
         
                     var day = $("<h5>").addClass("card-title").text(processDay(new Date(fiveDayForecastData.list[i].dt_txt), true));
@@ -87,7 +82,7 @@
             let listOfNextFiveTemps = []
 
             for(let i = 0; i < fiveDayForecastData.list.length; i+=8){
-                listOfNextFiveDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt)))
+                listOfNextFiveDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt), true))
                 listOfNextFiveTemps.push(fiveDayForecastData.list[i].main.temp_max)
             }
 
