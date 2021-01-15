@@ -18,8 +18,6 @@
                     case "newEvent":
                         // run function!
                         break;
-                    default:
-                        console.log("click")
                 }
                 $("#searchCityInput").val("")
             })
@@ -192,8 +190,11 @@
             case "scattered clouds":
                 return "🌤️ "
             break;
+            case "overcast clouds":
+                return "🌥️"
+            break;
             case "broken clouds":
-                return "🌥️☁"
+                return "🌥️"
             break;
             case "shower rain":
                 return "🌧️"
@@ -209,6 +210,9 @@
             case "mist":
                 return "🌁"
             break; 
+
+            default:
+                return "🤷"
         }
     }
 
