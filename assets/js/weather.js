@@ -27,7 +27,7 @@
 
 
     const searchWeather = (city, today) => {
-        fetch(`http://localhost:3000/api/currentWeather/${city}`)
+        fetch(`https://arcane-taiga-66168.herokuapp.com/api/currentWeather/${city}`)
         .then(res => res.json())
         .then(res => {
             // console.log(res)
@@ -50,13 +50,13 @@
 
                 // ADDING IN FIVE DAY FORECAST
                 let fiveDayForecastData = res.fiveDayForecast
-                console.log(fiveDayForecastData)
+                // console.log(fiveDayForecastData)
 
 
                 $("#threeDayForecast").empty()
                 $("#threeDayForecast").append("<div class=\"row\">");
 
-                for (var i = 0; i < fiveDayForecastData.list.length - 16; i++) {
+                for (var i = 8; i < fiveDayForecastData.list.length - 8; i++) {
 
                 if (fiveDayForecastData.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                     listOfNextThreeDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt)))
@@ -81,12 +81,12 @@
             let listOfNextFiveDays = []
             let listOfNextFiveTemps = []
 
-            for(let i = 0; i < fiveDayForecastData.list.length; i+=8){
+            for(let i = 8; i < fiveDayForecastData.list.length; i+=8){
                 listOfNextFiveDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt), true))
                 listOfNextFiveTemps.push(fiveDayForecastData.list[i].main.temp_max)
             }
 
-            console.log(listOfNextFiveDays)
+            // console.log(listOfNextFiveDays)
             // create 5 day temp chart
             var myChart = new Chart($("#myChart"), {
                 type: 'line',
