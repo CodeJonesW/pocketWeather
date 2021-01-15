@@ -4,6 +4,10 @@
         $("#todaysWeather").text(`${today} - `)
         let previous = localStorage.getItem("previousSearch")
 
+
+
+
+
             if(previous){
                 searchWeather(previous, today)
             }
@@ -33,20 +37,25 @@
         .then(res => {
             // console.log(res)
 
+
+            let listOfNextThreeDays = []
+            let listOfNexstThreeTemps = []
+
+
             // CURRENT WEATHER FORECAST
             let currentWeatherData = res.currentWeather
-             // console.log(res.currentWeather)
+            //  console.log(res.currentWeather)
                 $("#currentCity").text(`${today} in ${currentWeatherData.name} -`)
                 $("#todaysWeather").text(currentWeatherData.weather[0].description)
                 $("#temperature").text(`${currentWeatherData.main.temp} °`)
-                $("#currentWeatherIcon").text("🌞")
+                $("#currentWeatherIcon").text(processWeatherIcon(currentWeatherData.weather[0].description))
                 localStorage.setItem("previousSearch", currentWeatherData.name)
 
 
 
                 // ADDING IN FIVE DAY FORECAST
                 let fiveDayForecastData = res.fiveDayForecast
-                // console.log(fiveDayForecastData)
+                console.log(fiveDayForecastData)
 
 
                 $("#threeDayForecast").empty()
@@ -55,14 +64,15 @@
                 for (var i = 0; i < fiveDayForecastData.list.length - 16; i++) {
 
                 if (fiveDayForecastData.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-    
+                    listOfNextThreeDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt)))
+                    listOfNexstThreeTemps.push(fiveDayForecastData.list[i].main.temp_max)
                     var col = $("<div>").addClass("col-4");
                     var card = $("<div>").addClass("card shadow");
                     var body = $("<div>").addClass("card-body");
         
                     var day = $("<h5>").addClass("card-title").text(processDay(new Date(fiveDayForecastData.list[i].dt_txt), true));
                     
-                    var emoji = $("<span>").text("⛅").addClass("threeDayEmoji")
+                    var emoji = $("<span>").text(processWeatherIcon(fiveDayForecastData.list[i].weather[0].description)).addClass("threeDayEmoji")
         
                     var p1 = $("<p>").addClass("card-text").text("Temp: " + fiveDayForecastData.list[i].main.temp_max + " °F");
                     var p2 = $("<p>").addClass("card-text").text("Humidity: " + fiveDayForecastData.list[i].main.humidity + "%");
@@ -71,6 +81,55 @@
                     $("#threeDayForecast .row").append(col);
                 }
             }
+
+
+            let listOfNextFiveDays = []
+            let listOfNextFiveTemps = []
+
+            for(let i = 0; i < fiveDayForecastData.list.length; i+=8){
+                listOfNextFiveDays.push(processDay(new Date(fiveDayForecastData.list[i].dt_txt)))
+                listOfNextFiveTemps.push(fiveDayForecastData.list[i].main.temp_max)
+            }
+
+            console.log(listOfNextFiveDays)
+            // create 5 day temp chart
+            var myChart = new Chart($("#myChart"), {
+                type: 'line',
+                data:
+                {
+                    labels: listOfNextFiveDays,
+                    datasets: [{
+                        label: 'Avg Temp at this Time',
+                        data: listOfNextFiveTemps,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         })
     }
 
@@ -123,6 +182,38 @@
                     return "Sun:"
                 break; 
             }
+        }
+    }
+
+
+    const processWeatherIcon = (weatherStatus) => {
+        switch(weatherStatus) {
+            case "clear sky":
+                return "🏞️"
+            break;
+            case "few clouds":
+                return "☁️"
+            break;
+            case "scattered clouds":
+                return "🌤️ "
+            break;
+            case "broken clouds":
+                return "🌥️☁"
+            break;
+            case "shower rain":
+                return "🌧️"
+            break;
+            case "rain":
+                return "☔"
+            case "thunderstorm":
+                return "⛈️"
+            break; 
+            case "snow":
+                return '❄️'
+            break; 
+            case "mist":
+                return "🌁"
+            break; 
         }
     }
 
