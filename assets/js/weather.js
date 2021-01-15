@@ -1,7 +1,3 @@
-
-
-// window.addEventListener("load", )
-
     $( document ).ready(() => {
         let date = new Date ()
         let today = processDay(date)
@@ -9,18 +5,16 @@
         let previous = localStorage.getItem("previousSearch")
 
             if(previous){
-                searchCity(previous, today)
-                threeDay(previous)
+                searchWeather(previous, today)
             }
 
 
             $("#headDiv").click( (e) => {
                 e.preventDefault()
-                console.log(e.target.id)
 
                 switch(e.target.id) {
                     case "searchCityEmoji":
-                        searchCity($( "#searchCityInput").val(), today)
+                        searchWeather($( "#searchCityInput").val(), today)
                         break;
                     case "newEvent":
                         // run function!
@@ -32,53 +26,53 @@
             })
     })
 
-    const searchCity = (city, today) => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=9d900c46a82ac29300d02baa0107cbe8`)
+
+    const searchWeather = (city, today) => {
+        fetch(`http://localhost:3000/api/currentWeather/${city}`)
         .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            $("#currentCity").text(`${today} in ${data.name} -`)
-            $("#todaysWeather").text(data.weather[0].description)
-            $("#temperature").text(`${data.main.temp} °`)
-            $("#currentWeatherIcon").text("🌞")
-            localStorage.setItem("previousSearch", data.name)
-        })
-    }
+        .then(res => {
+            // console.log(res)
+
+            // CURRENT WEATHER FORECAST
+            let currentWeatherData = res.currentWeather
+             // console.log(res.currentWeather)
+                $("#currentCity").text(`${today} in ${currentWeatherData.name} -`)
+                $("#todaysWeather").text(currentWeatherData.weather[0].description)
+                $("#temperature").text(`${currentWeatherData.main.temp} °`)
+                $("#currentWeatherIcon").text("🌞")
+                localStorage.setItem("previousSearch", currentWeatherData.name)
 
 
 
+                // ADDING IN FIVE DAY FORECAST
+                let fiveDayForecastData = res.fiveDayForecast
+                // console.log(fiveDayForecastData)
 
 
-    const threeDay = (searchValue) => {
-        fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=9d900c46a82ac29300d02baa0107cbe8&units=imperial")
-            .then(res => res.json())
-            .then(data =>  {
-                console.log(data)
+                $("#threeDayForecast").empty()
                 $("#threeDayForecast").append("<div class=\"row\">");
 
-                for (var i = 0; i < data.list.length - 16; i++) {
+                for (var i = 0; i < fiveDayForecastData.list.length - 16; i++) {
 
-                if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                if (fiveDayForecastData.list[i].dt_txt.indexOf("15:00:00") !== -1) {
     
                     var col = $("<div>").addClass("col-4");
                     var card = $("<div>").addClass("card shadow");
                     var body = $("<div>").addClass("card-body");
         
-                    var day = $("<h5>").addClass("card-title").text(processDay(new Date(data.list[i].dt_txt), true));
+                    var day = $("<h5>").addClass("card-title").text(processDay(new Date(fiveDayForecastData.list[i].dt_txt), true));
                     
                     var emoji = $("<span>").text("⛅").addClass("threeDayEmoji")
         
-                    var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
-                    var p2 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
+                    var p1 = $("<p>").addClass("card-text").text("Temp: " + fiveDayForecastData.list[i].main.temp_max + " °F");
+                    var p2 = $("<p>").addClass("card-text").text("Humidity: " + fiveDayForecastData.list[i].main.humidity + "%");
         
-                    // merge together and put on page
                     col.append(card.append(body.append(day, emoji, p1, p2)));
                     $("#threeDayForecast .row").append(col);
                 }
             }
         })
     }
-    
 
 
     const processDay = (date, shorten) => {
@@ -102,7 +96,7 @@
                 break;
                 case 6:
                     return "Saturday"
-                case 7:
+                case 0:
                     return "Sunday"
                 break; 
             }
@@ -125,7 +119,7 @@
                 break;
                 case 6:
                     return "Sat:"
-                case 7:
+                case 0:
                     return "Sun:"
                 break; 
             }
