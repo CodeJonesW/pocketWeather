@@ -13,7 +13,7 @@ Simple mobile first responsive web app for finding the current weather.
 
 ```
 Users can search city for weather
-Users can view weathe forecasts, temperatures, and humidity
+Users can view weather forecasts, temperatures, and humidity
 Data persists through refresh
 ```
 
