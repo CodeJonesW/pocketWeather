@@ -212,7 +212,7 @@
             break; 
 
             default:
-                return "🤷"
+                return "🌥"
         }
     }
 
